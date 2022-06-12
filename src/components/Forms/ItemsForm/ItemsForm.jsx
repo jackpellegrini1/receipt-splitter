@@ -5,12 +5,18 @@ import ItemsItem from './subComponents/ItemsItem'
 export default function ItemsForm({ items, addItem, deleteItem, editItem, people }) {
 
   const [inputText, setInputText] = useState('');
+  const [errorState, setErrorState] = useState(false);
 
   const handleKeyDown = (key) => {
     if (key === 'Enter') {
-      const item = { name: inputText, price: 0, selectedPeople: []}
-      addItem(item);
-      setInputText('');
+      if (items.map(item => item.name).includes(inputText)) {
+        setErrorState(true);
+      } else {
+        setErrorState(false);
+        const item = { name: inputText, price: 0, selectedPeople: [] }
+        addItem(item);
+        setInputText('');
+      }
     }
   }
 
@@ -30,10 +36,10 @@ export default function ItemsForm({ items, addItem, deleteItem, editItem, people
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell sx={{width: '20%'}}><b>Name</b></TableCell>
-              <TableCell sx={{width: '25%'}}><b>Price</b></TableCell>
-              <TableCell sx={{width: '53%'}}><b>People</b></TableCell>
-              <TableCell sx={{width: '2%'}}></TableCell>
+              <TableCell sx={{ width: '20%' }}><b>Name</b></TableCell>
+              <TableCell sx={{ width: '25%' }}><b>Price</b></TableCell>
+              <TableCell sx={{ width: '53%' }}><b>People</b></TableCell>
+              <TableCell sx={{ width: '2%' }}></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -50,6 +56,8 @@ export default function ItemsForm({ items, addItem, deleteItem, editItem, people
         placeholder='Item'
         onChange={e => handleInputChange(e)}
         onKeyPress={(e) => handleKeyDown(e.key)}
+        error={errorState}
+        helperText={errorState ? "Cannot have duplicate items" : null}
       >
       </TextField>
     </>

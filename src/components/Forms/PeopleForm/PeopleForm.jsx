@@ -5,11 +5,17 @@ import PeopleItem from './subComponents/PeopleItem';
 export default function PeopleForm({ people, addPerson, deletePerson }) {
 
   const [inputText, setInputText] = useState('');
+  const [errorState, setErrorState] = useState(false);
 
   const handleKeyDown = (key) => {
     if (key === 'Enter') {
-      addPerson(inputText);
-      setInputText('');
+      if (people.includes(inputText)) {
+        setErrorState(true);
+      } else {
+        setErrorState(false);
+        addPerson(inputText);
+        setInputText('');
+      }
     }
   }
 
@@ -33,6 +39,8 @@ export default function PeopleForm({ people, addPerson, deletePerson }) {
         fullWidth
         onChange={e => handleInputChange(e)}
         onKeyPress={(e) => handleKeyDown(e.key)}
+        error={errorState}
+        helperText={errorState ? "Cannot have duplicate names" : null}
       >
       </TextField>
     </>
