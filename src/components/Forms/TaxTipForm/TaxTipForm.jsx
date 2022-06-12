@@ -22,6 +22,7 @@ export default function TaxTipForm({ tax, setTax, tip, setTip }) {
         value={tax}
         onChange={e => onTaxChange(e)}
         variant='filled'
+        onFocus={event => { event.target.select() }}
       />
       <TextField
         type='number'
@@ -32,6 +33,7 @@ export default function TaxTipForm({ tax, setTax, tip, setTip }) {
         value={tip}
         onChange={e => onTipChange(e)}
         variant='filled'
+        onFocus={event => { event.target.select() }}
       />
     </div>
   )

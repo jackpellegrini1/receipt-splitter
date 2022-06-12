@@ -38,6 +38,7 @@ export default function ItemsItem({ item, people, deleteItem, editItem }) {
           value={price}
           onChange={e => onPriceChange(e)}
           variant='filled'
+          onFocus={event => { event.target.select() }}
         ></TextField>
       </TableCell>
       <TableCell>
